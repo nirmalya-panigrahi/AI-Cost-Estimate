@@ -1,0 +1,119 @@
+================================================================================
+ENTERPRISE AI ARCHITECTURE & INTEGRATION INFRASTRUCTURE COST MODELER
+Comprehensive Layer Specification & Google AI Studio Prompt Blueprint
+================================================================================
+
+1. CORE DESIGN MANDATE (DETERMINISTIC & ZERO RUNTIME AI)
+--------------------------------------------------------------------------------
+- Execution Mode: 100% deterministic client-side TypeScript/JavaScript calculation engine.
+- Zero Runtime AI: No calls to Gemini API, @google/genai, OpenAI, or any LLM at runtime.
+- Predictability: Identical inputs must always yield bit-for-bit identical outputs.
+- Data Architecture: All unit rates, tiered volume discounts, legacy-stack credit multipliers, and OOTB vs. bespoke effort formulas reside in a single, versioned JSON/TypeScript rate card (`pricingCatalog.ts`) with user-editable overrides.
+- Hosting Compatibility: Fully static bundle (Vite + React + TypeScript + Tailwind CSS) deployable directly to GitHub Pages or Vercel.
+
+2. COMPREHENSIVE ARCHITECTURAL LAYERS & COMPONENTS
+(Derived from Enterprise API-Led, Microservices, and EAI Patterns)
+--------------------------------------------------------------------------------
+
+LAYER 1: EDGE, PERIMETER PROTECTION & API EXPOSURE LAYER
+- Web Application Firewall (WAF) & DDoS / Botnet Protection (Intelligent API Protection)
+- Content Delivery Network (CDN) & Edge Caching (Static & Dynamic Response Caching)
+- API Gateway & Microgateways (Routing, Throttling/Rate Limiting, Payload Redaction, Protocol/Format Conversion, CORS, OWASP Top 10 Protection, API Composition)
+- Webhook / Async Push Engine (Bi-directional event notification infrastructure to eliminate polling overhead)
+- Legacy Adjustment Toggles:
+  * Reuse existing DMZ / Hardware XML Appliances or Reverse Proxies
+  * Reuse existing Enterprise API Management (APIM) Platform (e.g., Apigee, Kong, MuleSoft, AWS API Gateway)
+  * Merge WAF/CDN into existing edge layer (eliminates standalone WAF cost)
+
+LAYER 2: IDENTITY, SECURITY & GOVERNANCE LAYER
+- Identity Provider (IdP) & Access Management (OAuth2/OIDC Authorization Server, AuthN/AuthZ)
+- API Key & Quota/Plan Enforcement Engine (Monetization & tiering controls)
+- Service-to-Service Security (mTLS certificates, Access Token validation, Secret Management / HashiCorp Vault / Parameter Store)
+- Legacy Adjustment Toggles:
+  * Reuse existing Corporate IdP / SSO / Active Directory / IAM federation
+  * Reuse existing Secret Manager / KMS
+
+LAYER 3: INTEGRATION, CONNECTORS & MESSAGING BACKBONE (EAI / ESB / EVENT HUB)
+- Connector & Adapter Provisioning (Split by OOTB vs. Bespoke):
+  * OOTB (Out-of-the-Box) Connectors: Pre-built SaaS, Database, and Standard Protocol adapters (REST, GraphQL, gRPC, OData, JDBC). Priced via SaaS connector licensing + low configuration hours.
+  * Bespoke / Custom Connectors: Custom channel adapters for legacy mainframes, proprietary ERPs, or non-standard protocols. Priced via engineering build effort (hours/sprint rate), custom transformation mapping (Data Structure, Data Type, Data Representation/XML-to-JSON), and ongoing maintenance overhead.
+- Synchronous Mediation & Orchestration:
+  * API Composition & BFF (Backend-for-Frontend) services
+  * Protocol & Data Format Translators (SOAP/XML to JSON/REST/gRPC)
+- Asynchronous Event Backbone & Messaging:
+  * Event Hub / Message Broker (Apache Kafka, RabbitMQ, JMS, AWS EventBridge/SQS)
+  * Message Store & Transactional Outbox / CDC (Change Data Capture / Transaction Log Tailing for decoupling monoliths)
+  * Saga Orchestrator / Choreography Engine (Distributed transaction state & compensating transactions)
+- Legacy Adjustment Toggles:
+  * Reuse existing ESB / Middleware (e.g., TIBCO, IBM MQ, MuleSoft) vs. Strangler Fig migration
+  * Reuse existing Kafka / Event Streaming clusters
+  * Monolith-to-Microservice Data Sync Mode (Temporary Shared DB View vs. Full CDC/Outbox replication)
+
+LAYER 4: AI COMPUTE, MODEL SERVING & ORCHESTRATION RUNTIME
+- AI Inference & Model Serving Compute:
+  * GPU / Accelerator Nodes (Dedicated instances vs. Serverless Inference endpoints)
+  * External Foundation Model API Consumption (Token-based input/output metering with Quota & Plan caps)
+  * Embedding Generation Pipeline (Batch vs. Real-time vectorization workers)
+- AI Agent & RAG Orchestration Runtime:
+  * Container Orchestration (Managed Kubernetes / EKS / AKS / GKE)
+  * Serverless Functions (FaaS - AWS Lambda / Azure Functions / Cloud Functions for event-driven glue & webhooks)
+  * Service Mesh & Sidecars (Control plane + data plane proxies for internal service-to-service routing, retries, and mTLS)
+  * Service Registry & Discovery (Consul, etcd, ZooKeeper) & Externalized Config Server (Spring Cloud Config)
+- Legacy Adjustment Toggles:
+  * Reuse existing Kubernetes Cluster capacity (spare vCPU/RAM/GPU headroom)
+  * Reuse existing VMware / On-Premise Bare-Metal / Private Cloud compute
+  * Reuse existing Service Mesh & Registry infrastructure
+
+LAYER 5: DATA PERSISTENCE, VECTOR STORAGE & STATE LAYER
+- Vector Database & Hybrid Search Index (HNSW/IVF memory footprint, storage IOPS, replica count)
+- Polyglot Non-Shared Microservice Storage (Per-service data ownership):
+  * Operational RDBMS (PostgreSQL, MySQL, Oracle/SQL Server)
+  * NoSQL / Document / Key-Value Stores (DynamoDB, MongoDB, Cassandra)
+  * In-Memory Cache & Semantic Cache (Redis / Memcached to cut LLM & downstream DB load)
+  * Object / Blob Storage (S3 / GCS / Azure Blob for raw documents, training artifacts, and audit archives)
+- Legacy Adjustment Toggles:
+  * Use pgvector / existing RDBMS extensions instead of standalone Vector DB
+  * Reuse existing Enterprise Data Warehouse / Data Lake / Object Storage
+  * Duplicate Static Reference Data locally vs. centralized lookup service
+
+LAYER 6: OBSERVABILITY, OPERATIONS & API MANAGEMENT PORTAL LAYER
+- Runtime Operations & Telemetry (APM, Distributed Tracing with Correlation IDs, Log Aggregation / ELK Stack, Metrics, Exception Tracking, Health Check APIs)
+- Developer Portal & API Marketplace (API Discovery, Self-Service Subscription, Mocking/Sandboxes, API Documentation)
+- CI/CD & Automated Quality Gates (Build pipelines, Contract Testing / Consumer-Driven Contracts, Automated Regression)
+- FinOps, Metering & Billing Engine (Chargeback/Showback reporting, API call & token metering)
+- Legacy Adjustment Toggles:
+  * Reuse existing Observability Suite (Datadog, Splunk, New Relic, self-hosted ELK/Prometheus)
+  * Reuse existing CI/CD & Developer Portal (Backstage, existing APIM portal)
+
+3. DETERMINISTIC COST CALCULATION FORMULAS
+--------------------------------------------------------------------------------
+For each component $i$:
+1. Gross Monthly Infra Cost ($C_{\text{gross}, i}$) = $\text{BaseFixed}_i + (\text{UsageUnits}_i \times \text{UnitRate}_i \times \text{HaDrMultiplier})$
+2. Legacy Offset Credit ($L_i$) = $C_{\text{gross}, i} \times \text{ReusePercentage}_i \times \text{IntegrationEfficiencyFactor}_i$
+3. Net Monthly Infra Cost ($C_{\text{net}, i}$) = $\max(0, C_{\text{gross}, i} - L_i)$
+4. One-Time Implementation CapEx ($I_{\text{capex}}$):
+   - OOTB Connectors: $N_{\text{ootb}} \times (\text{SetupHours}_{\text{ootb}} \times \text{EngRate})$
+   - Bespoke Connectors: $N_{\text{bespoke}} \times (\text{DesignHours} + \text{BuildHours} + \text{TestHours}) \times \text{EngRate} \times \text{ComplexityMultiplier}$
+   - Legacy Extraction / Strangler Glue: $\text{LegacySystemsCount} \times \text{DataSyncComplexityFactor} \times \text{MigrationBaseCost}$
+5. Total Cost of Ownership (TCO) = $\text{CapEx}_{\text{one-time}} + (\sum C_{\text{net}, i} \times \text{Months})$
+
+4. MASTER PROMPT TO PASTE INTO GOOGLE AI STUDIO
+--------------------------------------------------------------------------------
+"Build a comprehensive, interactive Enterprise AI & Integration Infrastructure Cost Modeler web application using React, TypeScript, and Tailwind CSS.
+
+CRITICAL CONSTRAINT: Do NOT include any AI/LLM SDKs, API calls, or runtime generative features. All calculations must be 100% deterministic, rule-based TypeScript math functions driven by a centralized, editable JSON pricing rate card (`src/config/pricingCatalog.ts`) so that identical inputs always produce identical results.
+
+Implement all 6 architectural layers from the specification:
+1. Edge, Perimeter & API Exposure (WAF, CDN, API Gateway, Webhooks)
+2. Identity, Security & Governance (IdP/OAuth2, Vault/Secrets, Quotas)
+3. Integration, Connectors & Messaging Backbone (OOTB vs. Bespoke Connectors, ESB/Translators, Kafka/Event Hub, CDC/Outbox, Sagas)
+4. AI Compute, Model Serving & Orchestration (GPU Nodes, Token APIs, Kubernetes, Serverless FaaS, Service Mesh, Registry)
+5. Data Persistence & Vector Storage (Vector DB, RDBMS, NoSQL, Semantic Cache, Object Storage)
+6. Observability, Ops & Developer Portal (APM/Tracing/ELK, Dev Portal, CI/CD Quality Gates, Metering)
+
+Key Features Required:
+- 'Existing Legacy Stack' controls per layer: Let users specify what they already own (e.g., existing Kubernetes headroom, existing ESB/Kafka, existing IdP, existing APIM, existing Observability) via sliders/toggles that deterministically calculate infrastructure cost offsets and migration/glue effort.
+- 'Connector & Integration Builder': Allow users to add OOTB connectors (low setup cost, recurring license) vs. Bespoke connectors (high engineering build effort for custom protocol/data transformation, ongoing maintenance).
+- Scenario Comparison & Presets: Include presets (e.g., 'Greenfield Cloud-Native AI', 'Brownfield Monolith Strangler + Legacy ESB', 'Hybrid On-Prem + Cloud RAG') and side-by-side comparison.
+- Transparent Formula Inspector & Rate Card Editor: Let users inspect every formula, edit unit prices directly in the UI, and export/import scenarios and rate cards as JSON or CSV.
+- Design as a pure static single-page app ready for GitHub Pages or Vercel deployment."
