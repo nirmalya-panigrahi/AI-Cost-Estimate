@@ -6,6 +6,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    base: '/AI-Cost-Estimate/',
     plugins: [
       react(),
       tailwindcss(),
